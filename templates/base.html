@@ -1,0 +1,58 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>{% block title %}Tyler Watson{% endblock %}</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    .bg-primary {
+      background-color: #ac2020;
+    }
+    .bg-secondary {
+      background-color: #4a0d0d;
+    }
+    .text-secondary {
+      color: #FCF7F8;
+    }
+    .text-accent {
+      color: #4a0d0d;
+    }
+  </style>
+</head>
+<body>
+<nav class="flex items-center justify-between bg-primary px-4 py-3">
+<div class="text-accent font-mono font-bold text-2xl"><a  href="{% url 'home' %}">Tyler Watson</a></div>
+<div class="flex space-x-8">
+<a class="text-secondary hover:bg-accent hover:text-primary transition duration-300 px-4 py-2 rounded-lg border border-accent font-bold" href="{% url 'blog' %}" >Blog</a>
+<a class="text-secondary hover:bg-accent hover:text-primary transition duration-300 px-4 py-2 rounded-lg border border-accent font-bold" href="{% url 'projects' %}" >Projects</a>
+<a class="text-secondary hover:bg-accent hover:text-primary transition duration-300 px-4 py-2 rounded-lg border border-accent font-bold" href="{% url 'about' %}" >About</a>
+{% if user.is_authenticated %}
+
+<a class="text-secondary hover:bg-accent hover:text-primary transition duration-300 px-4 py-2 rounded-lg border border-accent font-bold" href="{% url 'newpost' %}" >New Post</a>
+<a class="text-secondary hover:bg-accent hover:text-primary transition duration-300 px-4 py-2 rounded-lg border border-accent font-bold" href="{% url 'newproject' %}" >New Project</a>
+<form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button class="text-secondary hover:bg-accent hover:text-primary transition duration-300 px-4 py-2 rounded-lg border border-accent font-bold" type="submit">Log Out</button>
+  </form>
+  
+  {% endif %}
+</div>
+</nav>
+<main class="container mx-auto px-4 py-8">
+      
+    {% block breadcrumb %}
+    {% endblock %}
+ 
+  {% block content %}
+  {% endblock %}
+</main>
+
+
+<footer class="bg-white py-6">
+    <div class="container mx-auto text-center">
+      <p class="text-accent">&copy; 2024 Tyler Watson. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

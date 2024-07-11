@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Tyler Watson{% endblock %}
+
+{% block breadcrumb %}
+ 
+{% endblock %}
+
+{% load tz %}
+
+{% block content %}
+<main class="container mx-auto py-12 flex justify-center">
+  <div class="bg-primary p-8 rounded-lg shadow-md w-full max-w-md">
+    <h1 class="text-accent text-3xl font-bold mb-6 text-center">Login</h1>
+    {% if form.errors %}
+      <p class="text-secondary mb-4">Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    {% if next %}
+      {% if user.is_authenticated %}
+        <p class="text-secondary mb-4">Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
+      {% else %}
+        <p class="text-secondary mb-4">Please login to see this page.</p>
+      {% endif %}
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <div class="mb-4">
+        <label class="text-accent font-bold mb-2 block" for="{{ form.username.id_for_label }}">{{ form.username.label }}:</label>
+        {{ form.username }}
+      </div>
+      <div class="mb-6">
+        <label class="text-accent font-bold mb-2 block" for="{{ form.password.id_for_label }}">{{ form.password.label }}:</label>
+        {{ form.password }}
+      </div>
+      <div class="flex justify-center">
+        <button type="submit" class="bg-secondary text-secondary px-4 py-2 rounded-lg hover:bg-accent transition duration-300 cursor-pointer ">
+          Login
+        </button>
+        <input type="hidden" name="next" value="{{ next }}">
+      </div>
+    </form>
+  </div>
+</main>
+<style>
+  body {
+    background-color: #ffffff;
+    font-family: sans-serif;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+</style>
+
+{% endblock %}
+
+
+
