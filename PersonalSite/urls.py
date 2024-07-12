@@ -27,7 +27,7 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("about/", views.about, name="about"),
     re_path(r"^blog/$", views.blog, name="blog"),
-    re_path(r"^blog/(page=(?P<pk>\d+))?/$", views.blog, name="blog"),
+    re_path(r"^blog/(page=(?P<pk>\d+))?/$", views.blog, name="blogPage"),
     re_path(r"^blog/(?P<pk>\w+)/$", views.blogPost, name="blogPost"),
     path("projects/", views.projects, name="projects"),
     path('admin/', admin.site.urls),
