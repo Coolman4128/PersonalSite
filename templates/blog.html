@@ -20,6 +20,26 @@
     <h1 class="text-accent text-4xl font-bold mb-4">Blog Posts:</h1>
 </div>
 
+<div class="flex justify-between bg-white p-4 rounded-md">
+  <div class="flex-1">
+    {% if not firstPage %}
+    <a href="/blog/page={{pk|add:"-1"}}">
+      <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300">
+        Previous
+      </button>
+    </a>
+    {% endif %}
+  </div>
+  <div class="flex-1 text-right">
+    {% if not lastPage %}
+    <a href="/blog/page={{pk|add:"1"}}">
+      <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300">
+        Next
+      </button>
+    </a>
+    {% endif %}
+  </div>
+</div>
 
   
 {% for post in posts %}
@@ -40,5 +60,26 @@
         </div>
         <hr class="solid">
        {% endfor %}
+
+       <div class="flex justify-between bg-white p-4 rounded-md">
+        <div class="flex-1">
+          {% if not firstPage %}
+          <a href="/blog/page={{pk|add:"-1"}}">
+            <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300">
+              Previous
+            </button>
+          </a>
+          {% endif %}
+        </div>
+        <div class="flex-1 text-right">
+          {% if not lastPage %}
+          <a href="/blog/page={{pk|add:"1"}}">
+            <button class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-md transition duration-300">
+              Next
+            </button>
+          </a>
+          {% endif %}
+        </div>
+      </div>
 
        {% endblock %}

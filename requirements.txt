@@ -3,4 +3,4 @@ Django
 django-widget-tweaks
 Markdown
 python-decouple
-pil
+Pillow

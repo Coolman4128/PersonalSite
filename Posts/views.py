@@ -3,19 +3,61 @@ from django.contrib.auth.decorators import login_required
 from Posts.forms import NewPostForm, NewProjectForm
 from django.utils import timezone
 from .models import Post, Project
+import math
 # Create your views here.
 
 
 def home(request):
-    projects = Project.objects.all()
+    projectsfull = Project.objects.all()
+    projectsfull = list(projectsfull)
+    if len(projectsfull) < 3:
+        projects = projectsfull
+    else:
+        projects = projectsfull[:3]
     return render(request, "home.html", {"projects": projects})
 
 def about(request):
     return render(request, "about.html")
 
-def blog(request):
+def blog(request, pk=1):
+    pk = int(pk)
     posts = Post.objects.all()
-    return render(request, "blog.html", {"posts": posts})
+    numOfPosts = len(list(posts))
+    postsPerPage= 15
+    numOfPages = math.ceil(numOfPosts/postsPerPage)
+    firstPage = False
+    lastPage = False
+    startIndex = 0
+    endIndex = 0
+
+    print(pk)
+    print(numOfPages)
+    if numOfPages < 2:
+        return render(request, "blog.html", {"posts": posts, "firstPage": True, "lastPage": True, "pk":pk})
+    
+    if pk > numOfPages:
+        pk = numOfPages
+    elif pk < 1:
+        pk = 1
+
+    if pk == numOfPages:
+        startIndex = postsPerPage * (numOfPages - 1 )
+        endIndex = len(list(posts))
+    elif pk == 1:
+        startIndex = 0
+        endIndex = postsPerPage
+    else:
+        startIndex = postsPerPage * (pk - 1 )
+        endIndex = postsPerPage * (pk)
+    
+    if pk == 1:
+        firstPage = True
+    if pk == numOfPages:
+        lastPage = True
+
+    realPosts = list(posts)[startIndex:endIndex]
+
+    return render(request, "blog.html", {"posts": realPosts, "firstPage": firstPage, "lastPage": lastPage, "pk":pk})
 
 def blogPost(request, pk):
     post = get_object_or_404(Post, id=pk)
